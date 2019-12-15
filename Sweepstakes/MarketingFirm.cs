@@ -13,17 +13,21 @@ namespace Sweepstakes
         {
             this.manager = manager;
         }
+
+        //Example code for marketing firm to put in contestants, pick winner, and send messages
         public void Start()
         {
-            Sweepstakes sweepstakes = null;
             int sweepstakesAmount = UserInterface.SetAmountOfSweepstakes();
             for (int i = 0; i < sweepstakesAmount; i++)
             { 
+                Sweepstakes sweepstakes = null;
                 sweepstakes = new Sweepstakes(UserInterface.SetSweepstake());
                 int amountOfContestants = UserInterface.SetAmountOfContestants();
                 for (int j = 0; j < amountOfContestants; j++)
                 {
-                    sweepstakes.RegistrerContestants(new Contestants());
+                    Contestants contestants = new Contestants();
+                    sweepstakes.RegistrerContestants(contestants);
+                    sweepstakes.PrintContestantInfo(contestants);
                 }
                 manager.InsertSweepstakes(sweepstakes);
             }
@@ -31,7 +35,8 @@ namespace Sweepstakes
             {
                 Sweepstakes current;
                 current = manager.GetSweepstakes();
-                current.PickWinner();
+                Console.WriteLine(current.PickWinner());
+                current.SendMessage();
             }
             Console.ReadLine();
         }
